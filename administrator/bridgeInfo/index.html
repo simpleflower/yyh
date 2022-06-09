@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script type="text/javascript">
+
+	var createBridgeInfo;
+	var createBridgeNormalInfo; //桥梁一般资料
+	var createBridgeSuperInfo;  //桥梁上部结构数组
+	var createBridgeSuperNum;   //桥梁上部结构数量
+	var createBridgeSubInfo;    //桥梁下部结构数组
+	var createBridgeSubNum;     //桥梁下部结构数量
+	var createBridgeDeckInfo;   //桥梁桥面系数组
+	var createBridgeDeckNum;    //桥梁桥面系数量
+	$(function(){
+		
+		//定制字段
+		$("#definedColumns > li").click(function(e) {
+			//防止下拉菜单消失
+	        e.stopPropagation();
+	    });
+
+		$(".createBridgeNormalInfoBtn").click(function (){
+			for(var i=createBridgeSuperNum-1;i>0;i--){
+				$("#createBridgeSupInfoTable #createBridgeSupInfoTBody"+i).remove();
+			}
+			for(var i=createBridgeSubNum-1;i>0;i--){
+				$("#createBridgeSubInfoTable #createBridgeSubInfoTBody"+i).remove();
+			}
+			for(var i=createBridgeDeckNum-1;i>0;i--){
+				$("#createBridgeDeckInfoTable #createBridgeDeckInfoTBody"+i).remove();
+			}
+			createBridgeInfo=new Object();
+			createBridgeNormalInfo=new Object();
+			createBridgeSuperInfo=[];
+			createBridgeSuperNum=1;
+			createBridgeSubInfo=[];
+			createBridgeSubNum=1;
+			createBridgeDeckInfo=[];
+			createBridgeDeckNum=1;
+			$("#createBridgeNormalInfoTable input").val("");
+			$("#createBridgeSupInfoTable input").val("");
+			$("#createBridgeSubInfoTable input").val("");
+			$("#createBridgeDeckInfoTable input").val("");
+			$("#createBridgeNormalInfoModal").modal("show");
+		})
+
+		//桥梁上部结构
+		$(".createBridgeSuperInfoBtn").click(function (){
+			$("#createBridgeNormalInfoModal").modal("hide");
+			$("#createBridgeSupInfoModal").modal("show");
+		})
+		$("#addBridgeSuperInfoBtn").click(function (){
+			var htmlStr="<tbody id=\"createBridgeSupInfoTBody"+createBridgeSuperNum+"\">\n" +
+					"\t\t\t\t\t<tr class=\"createBridgeSupInfoTr"+createBridgeSuperNum+"\">\n" +
+					"\t\t\t\t\t\t<td colspan=\"8\" style=\"font-size: 20px\">桥梁上部结构</td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>上部结构名称<span style=\"font-size: 15px; color: red;\">*</span></td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-superStructureName"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>主梁形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-mainBeamForm"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>主梁尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-mainBeamSize"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>主梁数量</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-mainBeamNumber"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>横梁形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-crossBeamForm"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>主横桥下净空</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-underMainSpanBridgeClearance"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥下限高</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-underBridgeHeightLimit"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>拱桥矢跨比</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-archBridgeSpanRatio"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>支座形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-bearingType"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>支座数量</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-bearingNumber"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥面结构</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckStructure"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥面铺装厚度</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckPavementThickness"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>伸缩缝型式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-expansionJointType"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>伸缩缝数量</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-expansionJointNumber"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>主桥纵坡</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-mainBridgeLongitudinalWave"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>主桥横坡</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-mainBridgeTransverseWave"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>引桥纵坡</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-approachBridgeLongitudinalWave"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>引桥横坡</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-approachBridgeTransverseWave"+createBridgeSuperNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t</tbody>";
+			$("#createBridgeSupInfoTable").append(htmlStr);
+			createBridgeSuperNum++;
+		})
+		$("#deleteBridgeSuperInfoBtn").click(function (){
+			createBridgeSuperNum--;
+			$("#createBridgeSupInfoTable #createBridgeSupInfoTBody"+createBridgeSuperNum).remove();
+		})
+		$("#toCreateBridgeNormalInfoBtn").click(function (){
+			$("#createBridgeSupInfoModal").modal("hide");
+			$("#createBridgeNormalInfoModal").modal("show");
+		})
+
+
+		//桥梁下部结构
+		$(".createBridgeSubInfoBtn").click(function (){
+			$("#createBridgeSupInfoModal").modal("hide");
+			$("#createBridgeSubInfoModal").modal("show");
+		})
+		$("#addBridgeSubInfoBtn").click(function (){
+			var htmlStr="<tbody id=\"createBridgeSubInfoTBody"+createBridgeSubNum+"\">\n" +
+					"\t\t\t\t\t<tr class=\"createBridgeSupInfoTr"+createBridgeSubNum+"\">\n" +
+					"\t\t\t\t\t\t<td colspan=\"7\" style=\"font-size: 20px\">桥梁下部结构</td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>下部结构名称<span style=\"font-size: 15px; color: red;\">*</span></td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-subStructureName"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td rowspan=\"3\" style=\"text-align: center;vertical-align: middle !important;font-size: 18px;\">桥墩信息</td>\n" +
+					"\t\t\t\t\t\t<td>桥墩形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierForm"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥墩数量</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierNumber"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥墩标高</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierElevation"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>桥墩盖梁尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-cappingBeamSize"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥墩基底标高</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierPedestalElevation"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥墩底板尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierFloorSize"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>桥墩基桩尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierFoundationPileSize"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥墩基桩根数</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-pierFoundationPileNumber"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td rowspan=\"4\" style=\"text-align: center;vertical-align: middle !important;font-size: 18px;\">桥台信息</td>\n" +
+					"\t\t\t\t\t\t<td>桥台形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentForm"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台数量</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentNumber"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台标高</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentElevation"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>桥台基底标高</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentPedestalElevation"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台台帽尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentCapSize"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台底板尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentFloorSize"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>桥台基桩尺寸</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentFoundationPileSize"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台基桩根数</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-abutmentFoundationPileNumber"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台挡泥板厚度</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-upperBaffleThickness"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>桥台翼墙形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-wingWallForm"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥台翼墙长度</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-wingWallThickness"+createBridgeSubNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t</tbody>";
+			$("#createBridgeSubInfoTable").append(htmlStr);
+			createBridgeSubNum++;
+		})
+		$("#deleteBridgeSubInfoBtn").click(function (){
+			createBridgeSubNum--;
+			$("#createBridgeSubInfoTable #createBridgeSubInfoTBody"+createBridgeSubNum).remove();
+		})
+		$("#toCreateBridgeSuperInfoBtn").click(function (){
+			$("#createBridgeSubInfoModal").modal('hide');
+			$("#createBridgeSupInfoModal").modal("show");
+		})
+
+		//桥梁桥面系
+		$(".createBridgeDeckInfoBtn").click(function (){
+
+			$("#createBridgeSubInfoModal").modal("hide");
+			$("#createBridgeDeckInfoModal").modal("show");
+		})
+		$("#addBridgeDeckInfoBtn").click(function (){
+			var htmlStr="<tbody id=\"createBridgeDeckInfoTBody"+createBridgeDeckNum+"\">\n" +
+					"\t\t\t\t\t<tr class=\"createBridgeSupInfoTr"+createBridgeDeckNum+"\">\n" +
+					"\t\t\t\t\t\t<td colspan=\"8\" style=\"font-size: 20px\">桥梁桥面系</td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>桥面系名称<span style=\"font-size: 15px; color: red;\">*</span></td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-bridgeDeckName"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥面系形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckForm"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥面系横梁形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckCrossBeamForm"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>桥面系纵梁形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckVerticalBeamForm"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t<tr>\n" +
+					"\t\t\t\t\t\t<td>连接系形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckConnectForm"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>遮板形式</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckShutterForm"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t\t<td>遮板数量</td>\n" +
+					"\t\t\t\t\t\t<td><input type=\"text\" id=\"create-deckShutterNumber"+createBridgeDeckNum+"\"></td>\n" +
+					"\t\t\t\t\t</tr>\n" +
+					"\t\t\t\t\t</tbody>";
+			$("#createBridgeDeckInfoTable").append(htmlStr);
+			createBridgeDeckNum++;
+		});
+		$("#deleteBridgeDeckInfoBtn").click(function (){
+			createBridgeDeckNum--;
+			$("#createBridgeDeckInfoTable #createBridgeDeckInfoTBody"+createBridgeDeckNum).remove();
+		})
+		$("#toCreateBridgeSubInfoBtn").click(function (){
+			$("#createBridgeDeckInfoModal").modal("hide");
+			$("#createBridgeSubInfoModal").modal("show");
+		})
+		$("#saveCreateBridgeInfo").click(function (){
+			//生成桥梁一般资料
+			createBridgeNormalInfo.bridgeName=$("#create-bridgeName").val();
+			createBridgeNormalInfo.bridgeTypeId=$("#create-bridgeTypeId").val();
+			createBridgeNormalInfo.bridgeLocationRoad=$("#create-bridgeLocationRoad").val();
+			createBridgeNormalInfo.bridgeLocationLongitude=$("#create-bridgeLocationLongitude").val();
+			createBridgeNormalInfo.bridgeLocationLatitude=$("#create-bridgeLocationLatitude").val();
+			createBridgeNormalInfo.bridgeSpan=$("#create-bridgeSpan").val();
+			createBridgeNormalInfo.bridgeLevel=$("#create-bridgeLevel").val();
+			createBridgeNormalInfo.manageUnit=$("#create-manageUnit").val();
+			createBridgeNormalInfo.maintainUnit=$("#create-maintainUnit").val();
+			createBridgeNormalInfo.buildUnit=$("#create-buildUnit").val();
+			createBridgeNormalInfo.designUnit=$("#create-designUnit").val();
+			createBridgeNormalInfo.superviseUnit=$("#create-superviseUnit").val();
+			createBridgeNormalInfo.constructUnit=$("#create-constructUnit").val();
+			createBridgeNormalInfo.completedDate=$("#create-completedDate").val();
+			createBridgeNormalInfo.totalPrice=$("#create-totalPrice").val();
+			createBridgeNormalInfo.maintainCategory=$("#create-maintainCategory").val();
+			createBridgeNormalInfo.maintainLevel=$("#create-maintainLevel").val();
+			createBridgeNormalInfo.roadLevel=$("#create-roadLevel").val();
+			createBridgeNormalInfo.structureCategory=$("#create-structureCategory").val();
+			createBridgeNormalInfo.designLoad=$("#create-designLoad").val();
+			createBridgeNormalInfo.loadLimitStandard=$("#create-loadLimitStandard").val();
+			createBridgeNormalInfo.seismicIntensity=$("#create-seismicIntensity").val();
+			createBridgeNormalInfo.zxangle=$("#create-zxangle").val();
+			createBridgeNormalInfo.bridgeSpanNumber=$("#create-bridgeSpanNumber").val();
+			createBridgeNormalInfo.spanCombination=$("#create-spanCombination").val();
+			createBridgeNormalInfo.bridgeArea=$("#create-bridgeArea").val();
+			createBridgeNormalInfo.bridgeTotalLength=$("#create-bridgeTotalLength").val();
+			createBridgeNormalInfo.bridgeTotalWidth=$("#create-bridgeTotalWidth").val();
+			createBridgeNormalInfo.carriagewayClearWidth=$("#create-carriagewayClearWidth").val();
+			createBridgeNormalInfo.sidewalkClearWidth=$("#create-sidewalkClearWidth").val();
+			createBridgeNormalInfo.channelLevel=$("#create-channelLevel").val();
+			createBridgeNormalInfo.maxWaterLevel=$("#create-maxWaterLevel").val();
+			createBridgeNormalInfo.commonWaterLevel=$("#create-commonWaterLevel").val();
+			createBridgeNormalInfo.waterCollectorSize=$("#create-waterCollectorSize").val();
+			createBridgeNormalInfo.waterCollectorNumber=$("#create-waterCollectorNumber").val();
+			createBridgeNormalInfo.drainPipeSize=$("#create-drainPipeSize").val();
+			createBridgeNormalInfo.drainPipeLength=$("#create-drainPipeLength").val();
+			createBridgeNormalInfo.railingTotalLength=$("#create-railingTotalLength").val();
+			createBridgeNormalInfo.ralingStructure=$("#create-ralingStructure").val();
+			createBridgeNormalInfo.endpostSize=$("#create-endpostSize").val();
+			createBridgeNormalInfo.revetmentType=$("#create-revetmentType").val();
+			createBridgeNormalInfo.approachSlopeRetainingWallType=$("#create-approachSlopeRetainingWallType").val();
+			createBridgeNormalInfo.waterSupplyPipe=$("#create-waterSupplyPipe").val();
+			createBridgeNormalInfo.gasPipe=$("#create-gasPipe").val();
+			createBridgeNormalInfo.powerCable=$("#create-powerCable").val();
+			createBridgeNormalInfo.communicationCable=$("#create-communicationCable").val();
+			createBridgeInfo.dataCard=createBridgeNormalInfo;
+
+			//生成上部结构信息
+			for(var i=0;i<createBridgeSuperNum;i++){
+				var bridgeSuperInfo=new Object();
+				bridgeSuperInfo.superStructureName=$("#create-superStructureName"+i).val();
+				bridgeSuperInfo.mainBeamForm=$("#create-mainBeamForm"+i).val();
+				bridgeSuperInfo.mainBeamSize=$("#create-mainBeamSize"+i).val();
+				bridgeSuperInfo.mainBeamNumber=$("#create-mainBeamNumber"+i).val();
+				bridgeSuperInfo.crossBeamForm=$("#create-crossBeamForm"+i).val();
+				bridgeSuperInfo.underMainSpanBridgeClearance=$("#create-underMainSpanBridgeClearance"+i).val();
+				bridgeSuperInfo.underBridgeHeightLimit=$("#create-underBridgeHeightLimit"+i).val();
+				bridgeSuperInfo.archBridgeSpanRatio=$("#create-archBridgeSpanRatio"+i).val();
+				bridgeSuperInfo.bearingType=$("#create-bearingType"+i).val();
+				bridgeSuperInfo.bearingNumber=$("#create-bearingNumber"+i).val();
+				bridgeSuperInfo.deckStructure=$("#create-deckStructure"+i).val();
+				bridgeSuperInfo.deckPavementThickness=$("#create-deckPavementThickness"+i).val();
+				bridgeSuperInfo.expansionJointType=$("#create-expansionJointType"+i).val();
+				bridgeSuperInfo.expansionJointNumber=$("#create-expansionJointNumber"+i).val();
+				bridgeSuperInfo.mainBridgeLongitudinalWave=$("create-mainBridgeLongitudinalWave"+i).val();
+				bridgeSuperInfo.mainBridgeTransverseWave=$("#create-mainBridgeTransverseWave"+i).val();
+				bridgeSuperInfo.approachBridgeLongitudinalWave=$("#create-approachBridgeLongitudinalWave"+i).val();
+				bridgeSuperInfo.approachBridgeTransverseWave=$("#create-approachBridgeTransverseWave"+i).val();
+				createBridgeSuperInfo[i]=bridgeSuperInfo;
+			}
+			createBridgeInfo.superStructures=createBridgeSuperInfo;
+
+			//生成桥梁下部结构信息
+			for(var i=0;i<createBridgeSubNum;i++){
+				var bridgeSubInfo=new Object();
+				bridgeSubInfo.subStructureName=$("#create-subStructureName"+i).val();
+				bridgeSubInfo.pierForm=$("#create-pierForm"+i).val();
+				bridgeSubInfo.pierNumber=$("#create-pierNumber"+i).val();
+				bridgeSubInfo.pierElevation=$("#create-pierElevation"+i).val();
+				bridgeSubInfo.cappingBeamSize=$("#create-cappingBeamSize"+i).val();
+				bridgeSubInfo.pierPedestalElevation=$("#create-pierPedestalElevation"+i).val();
+				bridgeSubInfo.pierFloorSize=$("#create-pierFloorSize"+i).val();
+				bridgeSubInfo.pierFoundationPileSize=$("#create-pierFoundationPileSize"+i).val();
+				bridgeSubInfo.pierFoundationPileNumber=$("#create-pierFoundationPileNumber"+i).val();
+				bridgeSubInfo.abutmentForm=$("#create-abutmentForm"+i).val();
+				bridgeSubInfo.abutmentNumber=$("#create-abutmentNumber"+i).val();
+				bridgeSubInfo.abutmentElevation=$("#create-abutmentElevation"+i).val();
+				bridgeSubInfo.abutmentPedestalElevation=$("#create-abutmentPedestalElevation"+i).val();
+				bridgeSubInfo.abutmentCapSize=$("#create-abutmentCapSize"+i).val();
+				bridgeSubInfo.abutmentFloorSize=$("#create-abutmentFloorSize"+i).val();
+				bridgeSubInfo.abutmentFoundationPileSize=$("#create-abutmentFoundationPileSize"+i).val();
+				bridgeSubInfo.abutmentFoundationPileNumber=$("#create-abutmentFoundationPileNumber"+i).val();
+				bridgeSubInfo.upperBaffleThickness=$("#create-upperBaffleThickness"+i).val();
+				bridgeSubInfo.wingWallForm=$("#create-wingWallForm"+i).val();
+				bridgeSubInfo.wingWallThickness=$("#create-wingWallThickness"+i).val();
+				createBridgeSubInfo[i]=bridgeSubInfo;
+			}
+			createBridgeInfo.subStructures=createBridgeSubInfo;
+
+			//生成桥梁桥面系信息
+			for(var i=0;i<createBridgeDeckNum;i++){
+				var bridgeDeckInfo=new Object();
+				bridgeDeckInfo.bridgeDeckName=$("#create-bridgeDeckName"+i).val();
+				bridgeDeckInfo.deckForm=$("#create-deckForm"+i).val();
+				bridgeDeckInfo.deckCrossBeamForm=$("#create-deckCrossBeamForm"+i).val();
+				bridgeDeckInfo.deckVerticalBeamForm=$("#create-deckVerticalBeamForm"+i).val();
+				bridgeDeckInfo.deckConnectForm=$("#create-deckConnectForm"+i).val();
+				bridgeDeckInfo.deckShutterForm=$("#create-deckShutterForm"+i).val();
+				bridgeDeckInfo.deckShutterNumber=$("#create-deckShutterNumber"+i).val();
+				createBridgeDeckInfo[i]=bridgeDeckInfo;
+			}
+			createBridgeInfo.bridgeDecks=createBridgeDeckInfo;
+
+			alert(createBridgeInfo);
+
+			$("#createBridgeDeckInfoModal").modal("hide");
+		})
+
+
+	});
+	
+</script>
+</head>
+<style>
+	.bridgeModal table tr td input{
+		background-color: transparent;
+		border-style: none;
+		border-radius:0;
+		outline-color:transparent;
+		width: 100%;
+	}
+	.bridgeModal table tr td{
+		font-size: 15px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+	.modal{
+		overflow:auto;
+		overflow-y:scroll;
+	}
+</style>
+<body>
+
+	<!-- 创建桥梁基本信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="createBridgeNormalInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">创建桥梁</h4>
+				</div>
+				<table id="createBridgeNormalInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁名称<span style="font-size: 18px; color: red;">*</span></td>
+						<td colspan="2"><input type="text" id="create-bridgeName"></td>
+						<td style="padding-top: 10px;font-size: 18px">所在路名</td>
+						<td colspan="2"><input type="text" id="create-bridgeLocationRoad"></td>
+						<td style="padding-top: 10px;font-size: 18px">跨越</td>
+						<td><input type="text" id="create-bridgeSpan"></td>
+					</tr>
+					<tr>
+						<td colspan="8" style="font-size: 20px">桥梁一般资料</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁类型<span style="font-size: 18px; color: red;">*</span></td>
+						<td colspan="2"><select class="form-control" id="create-bridgeTypeId">
+							<option value="-1" disabled selected hidden>请选择</option>
+							<option value="bridge_type_1">梁式桥</option>
+							<option value="bridge_type_2">桁架桥</option>
+							<option value="bridge_type_3">钢结构拱桥圬工拱桥（无拱上构造）</option>
+							<option value="bridge_type_4">钢筋混凝上拱桥圬工拱桥（有拱上构造）</option>
+							<option value="bridge_type_5">刚构桥</option>
+							<option value="bridge_type_6">悬臂-挂梁</option>
+							<option value="bridge_type_7">人行天桥（梁桥）</option>
+							<option value="bridge_type_8">人行天桥（刚桁架桥）</option>
+						</select> </td>
+						<td style="padding-top: 10px;font-size: 18px">桥梁等级<span style="font-size: 18px; color: red;">*</span></td>
+						<td><select class="form-control" id="create-bridgeLevel">
+							<option value="-1" disabled selected hidden>请选择</option>
+							<option value="I">I级</option>
+							<option value="II">II级</option>
+							<option value="III">III级</option>
+							<option value="IV">IV级</option>
+						</select>
+						</td>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>管理单位</td>
+						<td><input type="text" id="create-manageUnit"></td>
+						<td>养护单位</td>
+						<td><input type="text" id="create-maintainUnit"></td>
+						<td>建设单位</td>
+						<td><input type="text" id="create-buildUnit"></td>
+						<td>设计单位</td>
+						<td><input type="text" id="create-designUnit"></td>
+					</tr>
+					<tr>
+						<td>监理单位</td>
+						<td><input type="text" id="create-superviseUnit"></td>
+						<td>施工单位</td>
+						<td><input type="text" id="create-constructUnit"></td>
+						<td>建成年月</td>
+						<td><input type="text" id="create-completedDate"></td>
+						<td>总造价</td>
+						<td><input type="text" id="create-totalPrice"></td>
+					</tr>
+					<tr>
+						<td>养护类型</td>
+						<td><input type="text" id="create-maintainCategory"></td>
+						<td>养护等级</td>
+						<td><input type="text" id="create-maintainLevel"></td>
+						<td>道路等级</td>
+						<td><input type="text" id="create-roadLevel"></td>
+						<td>结构类型</td>
+						<td><input type="text" id="create-structureCategory"></td>
+					</tr>
+					<tr>
+						<td>设计荷载</td>
+						<td><input type="text" id="create-designLoad"></td>
+						<td>限载标准</td>
+						<td><input type="text" id="create-loadLimitStandard"></td>
+						<td>抗震烈度</td>
+						<td><input type="text" id="create-seismicIntensity"></td>
+						<td>正斜交角</td>
+						<td><input type="text" id="create-zxangle"></td>
+					</tr>
+					<tr>
+						<td>桥梁跨数</td>
+						<td><input type="text" id="create-bridgeSpanNumber"></td>
+						<td>跨径组合</td>
+						<td><input type="text" id="create-spanCombination"></td>
+						<td>桥面面积</td>
+						<td><input type="text" id="create-bridgeArea"></td>
+						<td>桥梁总长</td>
+						<td><input type="text" id="create-bridgeTotalLength"></td>
+					</tr>
+					<tr>
+						<td>桥梁总宽</td>
+						<td><input type="text" id="create-bridgeTotalWidth"></td>
+						<td>车行道净宽</td>
+						<td><input type="text" id="create-carriagewayClearWidth"></td>
+						<td>人行道净宽</td>
+						<td><input type="text" id="create-sidewalkClearWidth"></td>
+						<td>河道等级</td>
+						<td><input type="text" id="create-channelLevel"></td>
+					</tr>
+					<tr>
+						<td>最高水位</td>
+						<td><input type="text" id="create-maxWaterLevel"></td>
+						<td>常水位</td>
+						<td><input type="text" id="create-commonWaterLevel"></td>
+						<td>经度坐标<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="create-bridgeLocationLongitude"></td>
+						<td>纬度坐标<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="create-bridgeLocationLatitude"></td>
+					</tr>
+					<tr>
+						<td colspan="8" style="font-size: 20px">附属工程</td>
+					</tr>
+					<tr>
+						<td>集水口尺寸</td>
+						<td><input type="text" id="create-waterCollectorSize"></td>
+						<td>集水口数量</td>
+						<td><input type="text" id="create-waterCollectorNumber"></td>
+						<td>泄水管尺寸</td>
+						<td><input type="text" id="create-drainPipeSize"></td>
+						<td>泄水管长度</td>
+						<td><input type="text" id="create-drainPipeLength"></td>
+					</tr>
+					<tr>
+						<td>栏杆总长</td>
+						<td><input type="text" id="create-railingTotalLength"></td>
+						<td>栏杆结构</td>
+						<td><input type="text" id="create-ralingStructure"></td>
+						<td>端柱尺寸</td>
+						<td><input type="text" id="create-endpostSize"></td>
+						<td>护岸类型</td>
+						<td><input type="text" id="create-revetmentType"></td>
+					</tr>
+					<tr>
+						<td>引坡挡墙类型</td>
+						<td><input type="text" id="create-approachSlopeRetainingWallType"></td>
+					</tr>
+					<tr>
+						<td colspan="8" style="font-size: 20px">附挂管线</td>
+					</tr>
+					<tr>
+						<td>给水管</td>
+						<td><input type="text" id="create-waterSupplyPipe"></td>
+						<td>燃气管</td>
+						<td><input type="text" id="create-gasPipe"></td>
+						<td>电力缆</td>
+						<td><input type="text" id="create-powerCable"></td>
+						<td>通信电缆</td>
+						<td><input type="text" id="create-communicationCable"></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary createBridgeSuperInfoBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建桥梁上部结构信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="createBridgeSupInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel2">创建桥梁</h4>
+				</div>
+				<table id="createBridgeSupInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					</thead>
+					<tbody id="createBridgeSupInfoTBody0">
+					<tr class="createBridgeSupInfoTr0">
+						<td colspan="8" style="font-size: 20px">桥梁上部结构</td>
+					</tr>
+					<tr>
+						<td>上部结构名称<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="create-superStructureName0"></td>
+						<td>主梁形式</td>
+						<td><input type="text" id="create-mainBeamForm0"></td>
+						<td>主梁尺寸</td>
+						<td><input type="text" id="create-mainBeamSize0"></td>
+						<td>主梁数量</td>
+						<td><input type="text" id="create-mainBeamNumber0"></td>
+					</tr>
+					<tr>
+						<td>横梁形式</td>
+						<td><input type="text" id="create-crossBeamForm0"></td>
+						<td>主横桥下净空</td>
+						<td><input type="text" id="create-underMainSpanBridgeClearance0"></td>
+						<td>桥下限高</td>
+						<td><input type="text" id="create-underBridgeHeightLimit0"></td>
+						<td>拱桥矢跨比</td>
+						<td><input type="text" id="create-archBridgeSpanRatio0"></td>
+					</tr>
+					<tr>
+						<td>支座形式</td>
+						<td><input type="text" id="create-bearingType0"></td>
+						<td>支座数量</td>
+						<td><input type="text" id="create-bearingNumber0"></td>
+						<td>桥面结构</td>
+						<td><input type="text" id="create-deckStructure0"></td>
+						<td>桥面铺装厚度</td>
+						<td><input type="text" id="create-deckPavementThickness0"></td>
+					</tr>
+					<tr>
+						<td>伸缩缝型式</td>
+						<td><input type="text" id="create-expansionJointType0"></td>
+						<td>伸缩缝数量</td>
+						<td><input type="text" id="create-expansionJointNumber0"></td>
+						<td>主桥纵坡</td>
+						<td><input type="text" id="create-mainBridgeLongitudinalWave0"></td>
+						<td>主桥横坡</td>
+						<td><input type="text" id="create-mainBridgeTransverseWave0"></td>
+					</tr>
+					<tr>
+						<td>引桥纵坡</td>
+						<td><input type="text" id="create-approachBridgeLongitudinalWave0"></td>
+						<td>引桥横坡</td>
+						<td><input type="text" id="create-approachBridgeTransverseWave0"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-success" id="addBridgeSuperInfoBtn">添加</button>
+					<button type="button" class="btn btn-danger" id="deleteBridgeSuperInfoBtn">删除</button>
+					<button type="button" class="btn btn-primary" id="toCreateBridgeNormalInfoBtn">上一页</button>
+					<button type="button" class="btn btn-primary createBridgeSubInfoBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建桥梁下部结构信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="createBridgeSubInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel3">创建桥梁</h4>
+				</div>
+				<table id="createBridgeSubInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					</thead>
+					<tbody id="createBridgeSubInfoTBody0">
+					<tr class="createBridgeSupInfoTr0">
+						<td colspan="7" style="font-size: 20px">桥梁下部结构</td>
+					</tr>
+					<tr>
+						<td>下部结构名称<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="create-subStructureName0"></td>
+					</tr>
+					<tr>
+						<td rowspan="3" style="text-align: center;vertical-align: middle !important;font-size: 18px;">桥墩信息</td>
+						<td>桥墩形式</td>
+						<td><input type="text" id="create-pierForm0"></td>
+						<td>桥墩数量</td>
+						<td><input type="text" id="create-pierNumber0"></td>
+						<td>桥墩标高</td>
+						<td><input type="text" id="create-pierElevation0"></td>
+					</tr>
+					<tr>
+						<td>桥墩盖梁尺寸</td>
+						<td><input type="text" id="create-cappingBeamSize0"></td>
+						<td>桥墩基底标高</td>
+						<td><input type="text" id="create-pierPedestalElevation0"></td>
+						<td>桥墩底板尺寸</td>
+						<td><input type="text" id="create-pierFloorSize0"></td>
+					</tr>
+					<tr>
+						<td>桥墩基桩尺寸</td>
+						<td><input type="text" id="create-pierFoundationPileSize0"></td>
+						<td>桥墩基桩根数</td>
+						<td><input type="text" id="create-pierFoundationPileNumber0"></td>
+					</tr>
+					<tr>
+						<td rowspan="4" style="text-align: center;vertical-align: middle !important;font-size: 18px;">桥台信息</td>
+						<td>桥台形式</td>
+						<td><input type="text" id="create-abutmentForm0"></td>
+						<td>桥台数量</td>
+						<td><input type="text" id="create-abutmentNumber0"></td>
+						<td>桥台标高</td>
+						<td><input type="text" id="create-abutmentElevation0"></td>
+					</tr>
+					<tr>
+						<td>桥台基底标高</td>
+						<td><input type="text" id="create-abutmentPedestalElevation0"></td>
+						<td>桥台台帽尺寸</td>
+						<td><input type="text" id="create-abutmentCapSize0"></td>
+						<td>桥台底板尺寸</td>
+						<td><input type="text" id="create-abutmentFloorSize0"></td>
+					</tr>
+					<tr>
+						<td>桥台基桩尺寸</td>
+						<td><input type="text" id="create-abutmentFoundationPileSize0"></td>
+						<td>桥台基桩根数</td>
+						<td><input type="text" id="create-abutmentFoundationPileNumber0"></td>
+						<td>桥台挡泥板厚度</td>
+						<td><input type="text" id="create-upperBaffleThickness0"></td>
+					</tr>
+					<tr>
+						<td>桥台翼墙形式</td>
+						<td><input type="text" id="create-wingWallForm0"></td>
+						<td>桥台翼墙长度</td>
+						<td><input type="text" id="create-wingWallThickness0"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-success" id="addBridgeSubInfoBtn">添加</button>
+					<button type="button" class="btn btn-danger" id="deleteBridgeSubInfoBtn">删除</button>
+					<button type="button" class="btn btn-primary" id="toCreateBridgeSuperInfoBtn">上一页</button>
+					<button type="button" class="btn btn-primary createBridgeDeckInfoBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建桥梁桥面系信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="createBridgeDeckInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel4">创建桥梁</h4>
+				</div>
+				<table id="createBridgeDeckInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					</thead>
+					<tbody id="createBridgeDeckInfoTBody0">
+					<tr class="createBridgeSupInfoTr0">
+						<td colspan="8" style="font-size: 20px">桥梁桥面系</td>
+					</tr>
+					<tr>
+						<td>桥面系名称<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="create-bridgeDeckName0"></td>
+						<td>桥面系形式</td>
+						<td><input type="text" id="create-deckForm0"></td>
+						<td>桥面系横梁形式</td>
+						<td><input type="text" id="create-deckCrossBeamForm0"></td>
+						<td>桥面系纵梁形式</td>
+						<td><input type="text" id="create-deckVerticalBeamForm0"></td>
+					</tr>
+					<tr>
+						<td>连接系形式</td>
+						<td><input type="text" id="create-deckConnectForm0"></td>
+						<td>遮板形式</td>
+						<td><input type="text" id="create-deckShutterForm0"></td>
+						<td>遮板数量</td>
+						<td><input type="text" id="create-deckShutterNumber0"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-success" id="addBridgeDeckInfoBtn">添加</button>
+					<button type="button" class="btn btn-danger" id="deleteBridgeDeckInfoBtn">删除</button>
+					<button type="button" class="btn btn-primary" id="toCreateBridgeSubInfoBtn">上一页</button>
+					<button type="button" class="btn btn-primary" id="saveCreateBridgeInfo">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 修改桥梁基本信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="editBridgeNormalInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel5">创建桥梁</h4>
+				</div>
+				<table id="editBridgeNormalInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁名称<span style="font-size: 18px; color: red;">*</span></td>
+						<td colspan="2"><input type="text" id="edit-bridgeName"></td>
+						<td style="padding-top: 10px;font-size: 18px">所在路名</td>
+						<td colspan="2"><input type="text" id="edit-bridgeLocationRoad"></td>
+						<td style="padding-top: 10px;font-size: 18px">跨越</td>
+						<td><input type="text" id="edit-bridgeSpan"></td>
+					</tr>
+					<tr>
+						<td colspan="8" style="font-size: 20px">桥梁一般资料</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁类型<span style="font-size: 18px; color: red;">*</span></td>
+						<td colspan="2"><select class="form-control" id="edit-bridgeTypeId">
+							<option value="-1" disabled selected hidden>请选择</option>
+							<option value="bridge_type_1">梁式桥</option>
+							<option value="bridge_type_2">桁架桥</option>
+							<option value="bridge_type_3">钢结构拱桥圬工拱桥（无拱上构造）</option>
+							<option value="bridge_type_4">钢筋混凝上拱桥圬工拱桥（有拱上构造）</option>
+							<option value="bridge_type_5">刚构桥</option>
+							<option value="bridge_type_6">悬臂-挂梁</option>
+							<option value="bridge_type_7">人行天桥（梁桥）</option>
+							<option value="bridge_type_8">人行天桥（刚桁架桥）</option>
+						</select> </td>
+						<td style="padding-top: 10px;font-size: 18px">桥梁等级<span style="font-size: 18px; color: red;">*</span></td>
+						<td><select class="form-control" id="edit-bridgeLevel">
+							<option value="-1" disabled selected hidden>请选择</option>
+							<option value="I">I级</option>
+							<option value="II">II级</option>
+							<option value="III">III级</option>
+							<option value="IV">IV级</option>
+						</select>
+						</td>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>管理单位</td>
+						<td><input type="text" id="edit-manageUnit"></td>
+						<td>养护单位</td>
+						<td><input type="text" id="edit-maintainUnit"></td>
+						<td>建设单位</td>
+						<td><input type="text" id="edit-buildUnit"></td>
+						<td>设计单位</td>
+						<td><input type="text" id="edit-designUnit"></td>
+					</tr>
+					<tr>
+						<td>监理单位</td>
+						<td><input type="text" id="edit-superviseUnit"></td>
+						<td>施工单位</td>
+						<td><input type="text" id="edit-constructUnit"></td>
+						<td>建成年月</td>
+						<td><input type="text" id="edit-completedDate"></td>
+						<td>总造价</td>
+						<td><input type="text" id="edit-totalPrice"></td>
+					</tr>
+					<tr>
+						<td>养护类型</td>
+						<td><input type="text" id="edit-maintainCategory"></td>
+						<td>养护等级</td>
+						<td><input type="text" id="edit-maintainLevel"></td>
+						<td>道路等级</td>
+						<td><input type="text" id="edit-roadLevel"></td>
+						<td>结构类型</td>
+						<td><input type="text" id="edit-structureCategory"></td>
+					</tr>
+					<tr>
+						<td>设计荷载</td>
+						<td><input type="text" id="edit-designLoad"></td>
+						<td>限载标准</td>
+						<td><input type="text" id="edit-loadLimitStandard"></td>
+						<td>抗震烈度</td>
+						<td><input type="text" id="edit-seismicIntensity"></td>
+						<td>正斜交角</td>
+						<td><input type="text" id="edit-zxangle"></td>
+					</tr>
+					<tr>
+						<td>桥梁跨数</td>
+						<td><input type="text" id="edit-bridgeSpanNumber"></td>
+						<td>跨径组合</td>
+						<td><input type="text" id="edit-spanCombination"></td>
+						<td>桥面面积</td>
+						<td><input type="text" id="edit-bridgeArea"></td>
+						<td>桥梁总长</td>
+						<td><input type="text" id="edit-bridgeTotalLength"></td>
+					</tr>
+					<tr>
+						<td>桥梁总宽</td>
+						<td><input type="text" id="edit-bridgeTotalWidth"></td>
+						<td>车行道净宽</td>
+						<td><input type="text" id="edit-carriagewayClearWidth"></td>
+						<td>人行道净宽</td>
+						<td><input type="text" id="edit-sidewalkClearWidth"></td>
+						<td>河道等级</td>
+						<td><input type="text" id="edit-channelLevel"></td>
+					</tr>
+					<tr>
+						<td>最高水位</td>
+						<td><input type="text" id="edit-maxWaterLevel"></td>
+						<td>常水位</td>
+						<td><input type="text" id="edit-commonWaterLevel"></td>
+						<td>经度坐标<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="edit-bridgeLocationLongitude"></td>
+						<td>纬度坐标<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="edit-bridgeLocationLatitude"></td>
+					</tr>
+					<tr>
+						<td colspan="8" style="font-size: 20px">附属工程</td>
+					</tr>
+					<tr>
+						<td>集水口尺寸</td>
+						<td><input type="text" id="edit-waterCollectorSize"></td>
+						<td>集水口数量</td>
+						<td><input type="text" id="edit-waterCollectorNumber"></td>
+						<td>泄水管尺寸</td>
+						<td><input type="text" id="edit-drainPipeSize"></td>
+						<td>泄水管长度</td>
+						<td><input type="text" id="edit-drainPipeLength"></td>
+					</tr>
+					<tr>
+						<td>栏杆总长</td>
+						<td><input type="text" id="edit-railingTotalLength"></td>
+						<td>栏杆结构</td>
+						<td><input type="text" id="edit-ralingStructure"></td>
+						<td>端柱尺寸</td>
+						<td><input type="text" id="edit-endpostSize"></td>
+						<td>护岸类型</td>
+						<td><input type="text" id="edit-revetmentType"></td>
+					</tr>
+					<tr>
+						<td>引坡挡墙类型</td>
+						<td><input type="text" id="edit-approachSlopeRetainingWallType"></td>
+					</tr>
+					<tr>
+						<td colspan="8" style="font-size: 20px">附挂管线</td>
+					</tr>
+					<tr>
+						<td>给水管</td>
+						<td><input type="text" id="edit-waterSupplyPipe"></td>
+						<td>燃气管</td>
+						<td><input type="text" id="edit-gasPipe"></td>
+						<td>电力缆</td>
+						<td><input type="text" id="edit-powerCable"></td>
+						<td>通信电缆</td>
+						<td><input type="text" id="edit-communicationCable"></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary editBridgeSuperInfoBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改桥梁上部结构信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="editBridgeSupInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel6">创建桥梁</h4>
+				</div>
+				<table id="editBridgeSupInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					</thead>
+					<tbody id="editBridgeSupInfoTBody0">
+					<tr class="editBridgeSupInfoTr0">
+						<td colspan="8" style="font-size: 20px">桥梁上部结构</td>
+					</tr>
+					<tr>
+						<td>上部结构名称<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="edit-superStructureName0"></td>
+						<td>主梁形式</td>
+						<td><input type="text" id="edit-mainBeamForm0"></td>
+						<td>主梁尺寸</td>
+						<td><input type="text" id="edit-mainBeamSize0"></td>
+						<td>主梁数量</td>
+						<td><input type="text" id="edit-mainBeamNumber0"></td>
+					</tr>
+					<tr>
+						<td>横梁形式</td>
+						<td><input type="text" id="edit-crossBeamForm0"></td>
+						<td>主横桥下净空</td>
+						<td><input type="text" id="edit-underMainSpanBridgeClearance0"></td>
+						<td>桥下限高</td>
+						<td><input type="text" id="edit-underBridgeHeightLimit0"></td>
+						<td>拱桥矢跨比</td>
+						<td><input type="text" id="edit-archBridgeSpanRatio0"></td>
+					</tr>
+					<tr>
+						<td>支座形式</td>
+						<td><input type="text" id="edit-bearingType0"></td>
+						<td>支座数量</td>
+						<td><input type="text" id="edit-bearingNumber0"></td>
+						<td>桥面结构</td>
+						<td><input type="text" id="edit-deckStructure0"></td>
+						<td>桥面铺装厚度</td>
+						<td><input type="text" id="edit-deckPavementThickness0"></td>
+					</tr>
+					<tr>
+						<td>伸缩缝型式</td>
+						<td><input type="text" id="edit-expansionJointType0"></td>
+						<td>伸缩缝数量</td>
+						<td><input type="text" id="edit-expansionJointNumber0"></td>
+						<td>主桥纵坡</td>
+						<td><input type="text" id="edit-mainBridgeLongitudinalWave0"></td>
+						<td>主桥横坡</td>
+						<td><input type="text" id="edit-mainBridgeTransverseWave0"></td>
+					</tr>
+					<tr>
+						<td>引桥纵坡</td>
+						<td><input type="text" id="edit-approachBridgeLongitudinalWave0"></td>
+						<td>引桥横坡</td>
+						<td><input type="text" id="edit-approachBridgeTransverseWave0"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-success" id="edit-addBridgeSuperInfoBtn">添加</button>
+					<button type="button" class="btn btn-danger" id="edit-deleteBridgeSuperInfoBtn">删除</button>
+					<button type="button" class="btn btn-primary" id="toEditBridgeNormalInfoBtn">上一页</button>
+					<button type="button" class="btn btn-primary editBridgeSubInfoBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改桥梁下部结构信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="editBridgeSubInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel7">创建桥梁</h4>
+				</div>
+				<table id="editBridgeSubInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					</thead>
+					<tbody id="editBridgeSubInfoTBody0">
+					<tr class="editBridgeSupInfoTr0">
+						<td colspan="7" style="font-size: 20px">桥梁下部结构</td>
+					</tr>
+					<tr>
+						<td>下部结构名称<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="edit-subStructureName0"></td>
+					</tr>
+					<tr>
+						<td rowspan="3" style="text-align: center;vertical-align: middle !important;font-size: 18px;">桥墩信息</td>
+						<td>桥墩形式</td>
+						<td><input type="text" id="edit-pierForm0"></td>
+						<td>桥墩数量</td>
+						<td><input type="text" id="edit-pierNumber0"></td>
+						<td>桥墩标高</td>
+						<td><input type="text" id="edit-pierElevation0"></td>
+					</tr>
+					<tr>
+						<td>桥墩盖梁尺寸</td>
+						<td><input type="text" id="edit-cappingBeamSize0"></td>
+						<td>桥墩基底标高</td>
+						<td><input type="text" id="edit-pierPedestalElevation0"></td>
+						<td>桥墩底板尺寸</td>
+						<td><input type="text" id="edit-pierFloorSize0"></td>
+					</tr>
+					<tr>
+						<td>桥墩基桩尺寸</td>
+						<td><input type="text" id="edit-pierFoundationPileSize0"></td>
+						<td>桥墩基桩根数</td>
+						<td><input type="text" id="edit-pierFoundationPileNumber0"></td>
+					</tr>
+					<tr>
+						<td rowspan="4" style="text-align: center;vertical-align: middle !important;font-size: 18px;">桥台信息</td>
+						<td>桥台形式</td>
+						<td><input type="text" id="edit-abutmentForm0"></td>
+						<td>桥台数量</td>
+						<td><input type="text" id="edit-abutmentNumber0"></td>
+						<td>桥台标高</td>
+						<td><input type="text" id="edit-abutmentElevation0"></td>
+					</tr>
+					<tr>
+						<td>桥台基底标高</td>
+						<td><input type="text" id="edit-abutmentPedestalElevation0"></td>
+						<td>桥台台帽尺寸</td>
+						<td><input type="text" id="edit-abutmentCapSize0"></td>
+						<td>桥台底板尺寸</td>
+						<td><input type="text" id="edit-abutmentFloorSize0"></td>
+					</tr>
+					<tr>
+						<td>桥台基桩尺寸</td>
+						<td><input type="text" id="edit-abutmentFoundationPileSize0"></td>
+						<td>桥台基桩根数</td>
+						<td><input type="text" id="edit-abutmentFoundationPileNumber0"></td>
+						<td>桥台挡泥板厚度</td>
+						<td><input type="text" id="edit-upperBaffleThickness0"></td>
+					</tr>
+					<tr>
+						<td>桥台翼墙形式</td>
+						<td><input type="text" id="edit-wingWallForm0"></td>
+						<td>桥台翼墙长度</td>
+						<td><input type="text" id="edit-wingWallThickness0"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-success" id="edit-addBridgeSubInfoBtn">添加</button>
+					<button type="button" class="btn btn-danger" id="edit-deleteBridgeSubInfoBtn">删除</button>
+					<button type="button" class="btn btn-primary" id="toEditBridgeSuperInfoBtn">上一页</button>
+					<button type="button" class="btn btn-primary editBridgeDeckInfoBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改桥梁桥面系信息的模态窗口 -->
+	<div class="modal fade bridgeModal" id="editBridgeDeckInfoModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel8">创建桥梁</h4>
+				</div>
+				<table id="editBridgeDeckInfoTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					</thead>
+					<tbody id="editBridgeDeckInfoTBody0">
+					<tr class="editBridgeSupInfoTr0">
+						<td colspan="8" style="font-size: 20px">桥梁桥面系</td>
+					</tr>
+					<tr>
+						<td>桥面系名称<span style="font-size: 15px; color: red;">*</span></td>
+						<td><input type="text" id="edit-bridgeDeckName0"></td>
+						<td>桥面系形式</td>
+						<td><input type="text" id="edit-deckForm0"></td>
+						<td>桥面系横梁形式</td>
+						<td><input type="text" id="edit-deckCrossBeamForm0"></td>
+						<td>桥面系纵梁形式</td>
+						<td><input type="text" id="edit-deckVerticalBeamForm0"></td>
+					</tr>
+					<tr>
+						<td>连接系形式</td>
+						<td><input type="text" id="edit-deckConnectForm0"></td>
+						<td>遮板形式</td>
+						<td><input type="text" id="edit-deckShutterForm0"></td>
+						<td>遮板数量</td>
+						<td><input type="text" id="edit-deckShutterNumber0"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-success" id="edit-addBridgeDeckInfoBtn">添加</button>
+					<button type="button" class="btn btn-danger" id="edit-deleteBridgeDeckInfoBtn">删除</button>
+					<button type="button" class="btn btn-primary" id="toEditBridgeSubInfoBtn">上一页</button>
+					<button type="button" class="btn btn-primary" id="saveEditBridgeInfo">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	<div>
+		<div style="position: relative; left: 10px; top: -10px;">
+			<div class="page-header">
+				<h3>桥梁列表</h3>
+			</div>
+		</div>
+	</div>
+	
+	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
+	
+		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
+		
+			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
+				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon">桥梁名称</div>
+				      <input class="form-control" type="text">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon">桥梁类型</div>
+				      <input class="form-control" type="text">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon">桥梁所在路名</div>
+				      <input class="form-control" type="text">
+				    </div>
+				  </div>
+				  
+<!--				  <div class="form-group">-->
+<!--				    <div class="input-group">-->
+<!--				      <div class="input-group-addon"></div>-->
+<!--				      <input class="form-control" type="text">-->
+<!--				    </div>-->
+<!--				  </div>-->
+				  
+				  <button type="submit" class="btn btn-default">查询</button>
+				  
+				</form>
+			</div>
+			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
+				<div class="btn-group" style="position: relative; top: 18%;">
+					<button type="button" class="btn btn-primary createBridgeNormalInfoBtn" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editCustomerModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+					<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				</div>
+
+			</div>
+			<div style="position: relative;top: 10px;">
+				<table class="table table-hover">
+					<thead>
+					<tr style="color: #B3B3B3;">
+						<td><input type="checkbox" /></td>
+						<td>桥梁名称</td>
+						<td>桥梁类型</td>
+						<td>桥梁所在路名</td>
+						<td>桥梁等级</td>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">长江大桥</a></td>
+						<td>重庆</td>
+						<td>拱桥</td>
+						<td>I级</td>
+					</tr>
+					<tr class="active">
+						<td><input type="checkbox" /></td>
+						<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">赵州桥</a></td>
+						<td>重庆</td>
+						<td>悬浮桥</td>
+						<td>II级</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div style="height: 50px; position: relative;top: 30px;">
+				<div>
+					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
+				</div>
+				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
+					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							10
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">20</a></li>
+							<li><a href="#">30</a></li>
+						</ul>
+					</div>
+					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
+				</div>
+				<div style="position: relative;top: -88px; left: 285px;">
+					<nav>
+						<ul class="pagination">
+							<li class="disabled"><a href="#">首页</a></li>
+							<li class="disabled"><a href="#">上一页</a></li>
+							<li class="active"><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">下一页</a></li>
+							<li class="disabled"><a href="#">末页</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+</body>
+</html>

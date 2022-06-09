@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+	<link href="../../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../../../jquery/bs_pagination-master/css/jquery.bs_pagination.min.css" type="text/css" rel="stylesheet"/>
+	<script type="text/javascript" src="../../../../jquery/jquery-1.11.1-min.js"></script>
+	<script type="text/javascript" src="../../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="../../../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script type="text/javascript" src="../../../../jquery/bs_pagination-master/js/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="../../../../jquery/bs_pagination-master/localization/en.js"></script>
+
+<script type="text/javascript">
+
+
+	$(function(){
+		
+		//定制字段
+		$("#definedColumns > li").click(function(e) {
+			//防止下拉菜单消失
+	        e.stopPropagation();
+	    });
+
+		$("#createSubNormalRegularCheck").click(function (){
+			$("#createSuperNormalRegularCheckModal").modal("hide");
+			$("#createSubNormalRegularCheckModal").modal("show");
+		})
+		$("#createDeckNormalRegularCheck").click(function (){
+			$("#createSubNormalRegularCheckModal").modal("hide");
+			$("#createDeckNormalRegularCheckModal").modal("show");
+		})
+		$("#toCreateSuperNormalRegularCheck").click(function (){
+			$("#createSubNormalRegularCheckModal").modal("hide");
+			$("#createSuperNormalRegularCheckModal").modal("show");
+		})
+		$("#toCreateSubNormalRegularCheck").click(function (){
+			$("#createDeckNormalRegularCheckModal").modal("hide");
+			$("#createSubNormalRegularCheckModal").modal("show");
+		})
+		$("#createNormalRegularCheckBtn").click(function (){
+			$("#createSuperNormalRegularCheckModal").modal("show");
+		})
+
+
+		$("#editSubNormalRegularCheck").click(function (){
+			$("#editSuperNormalRegularCheckModal").modal("hide");
+			$("#editSubNormalRegularCheckModal").modal("show");
+		})
+		$("#editDeckNormalRegularCheck").click(function (){
+			$("#editSubNormalRegularCheckModal").modal("hide");
+			$("#editDeckNormalRegularCheckModal").modal("show");
+		})
+		$("#toEditSuperNormalRegularCheck").click(function (){
+			$("#editSubNormalRegularCheckModal").modal("hide");
+			$("#editSuperNormalRegularCheckModal").modal("show");
+		})
+		$("#toEditSubNormalRegularCheck").click(function (){
+			$("#editDeckNormalRegularCheckModal").modal("hide");
+			$("#editSubNormalRegularCheckModal").modal("show");
+		})
+		$("#editNormalRegularCheckBtn").click(function (){
+			$("#editSuperNormalRegularCheckModal").modal("show");
+		})
+
+	});
+	
+</script>
+</head>
+<style>
+	.normalRegularCheckModal table tr td input{
+		background-color: transparent;
+		border-style: none;
+		border-radius:0;
+		outline-color:transparent;
+	}
+	.normalRegularCheckModal table tr td{
+		font-size: 15px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+</style>
+<body>
+
+	<!-- 创建上部结构常规定期检查的模态窗口 -->
+	<div class="modal fade normalRegularCheckModal" id="createSuperNormalRegularCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 95%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">创建常规定期检查记录</h4>
+				</div>
+				<table id="createSuperRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td colspan="10" style="font-size: 20px">常规定期检查记录表</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁名称</td>
+						<td colspan="2"><select class="form-control" id="create-normalRegularCheckBridgeId">
+							<option value="-1" disabled selected hidden>请选择</option>
+						</select></td>
+						<td style="padding-top: 10px;font-size: 18px">检测单位</td>
+						<td colspan="2"><input type="text" class="form-control" id="create-normalRegularCheckUnit"></td>
+						<td style="padding-top: 10px;font-size: 18px">日期</td>
+						<td ><input type="date" style="width: 100%" id="create-normalRegularCheckDate"></td>
+						<td style="padding-top: 10px;font-size: 18px">巡检人</td>
+						<td><input type="text" class="form-control" id="create-normalRegularCheckPerson"></td>
+					</tr>
+					<tr>
+						<td colspan="10" style="font-size: 20px">桥梁上部结构</td>
+					</tr>
+					<tr>
+						<td>部件</td>
+						<td>构件名称</td>
+						<td>状态</td>
+						<td>损坏类型</td>
+						<td>损坏程度</td>
+						<td>损坏原因</td>
+						<td colspan="2">维修范围与方案</td>
+						<td>需要特殊检查</td>
+						<td>下次检查时间</td>
+					</tr>
+					</thead>
+					<tbody id="createSuperRegularCheckTBody">
+					<tr>
+						<td>
+							<input type="text" class="form-control" id="create-superRegularCheckPart0">
+						</td>
+						<td><input type="text" class="form-control" id="create-superRegularCheckComponentName0"></td>
+						<td><input type="text" class="form-control" id="create-superRegularCheckCondition0"></td>
+						<td>
+							<input type="text" class="form-control" id="create-superRegularCheckDamageType0">
+						</td>
+						<td>
+							<select class=" form-control" id="create-superRegularCheckDamageDegree0">
+								<option value="-1" disabled selected hidden>请选择</option>
+							</select>
+						</td>
+						<td><input type="text" class="form-control" id="create-superRegularCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="create-superRegularCheckMaintenanceScopeAndScheme0"></td>
+						<td>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="create-superRegularCheckIsSpecialCheck0" value="是">是</label>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="create-superRegularCheckIsSpecialCheck0" value="否">否</label>
+						</td>
+						<td><input type="date" style="width: 100%" id="create-superRegularCheckNextCheckTime0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="createSubNormalRegularCheck">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建下部结构常规定期检查的模态窗口 -->
+	<div class="modal fade normalRegularCheckModal" id="createSubNormalRegularCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 95%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel2">创建常规定期检查记录</h4>
+				</div>
+				<table id="createSubRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td colspan="10" style="font-size: 20px">桥梁下部结构</td>
+					</tr>
+					<tr>
+						<td>部件</td>
+						<td>构件名称</td>
+						<td>状态</td>
+						<td>损坏类型</td>
+						<td>损坏程度</td>
+						<td>损坏原因</td>
+						<td colspan="2">维修范围与方案</td>
+						<td>需要特殊检查</td>
+						<td>下次检查时间</td>
+					</tr>
+					</thead>
+					<tbody id="createSubRegularCheckTBody">
+					<tr>
+						<td>
+							<input type="text" class="form-control" id="create-subRegularCheckPart0">
+						</td>
+						<td><input type="text" class="form-control" id="create-subRegularCheckComponentName0"></td>
+						<td><input type="text" class="form-control" id="create-subRegularCheckCondition0"></td>
+						<td>
+							<input type="text" class="form-control" id="create-subRegularCheckDamageType0">
+						</td>
+						<td>
+							<select class=" form-control" id="create-subRegularCheckDamageDegree0">
+								<option value="-1" disabled selected hidden>请选择</option>
+							</select>
+						</td>
+						<td><input type="text" class="form-control" id="create-subRegularCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="create-subRegularCheckMaintenanceScopeAndScheme0"></td>
+						<td>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="create-subRegularCheckIsSpecialCheck0" value="是">是</label>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="create-subRegularCheckIsSpecialCheck0" value="否">否</label>
+						</td>
+						<td><input type="date" style="width: 100%" id="create-subRegularCheckNextCheckTime0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="toCreateSuperNormalRegularCheck">上一页</button>
+					<button type="button" class="btn btn-primary" id="createDeckNormalRegularCheck">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建桥面系常规定期检查的模态窗口 -->
+	<div class="modal fade normalRegularCheckModal" id="createDeckNormalRegularCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 95%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel3">创建常规定期检查记录</h4>
+				</div>
+				<table id="createDeckRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td colspan="10" style="font-size: 20px">桥梁桥面系</td>
+					</tr>
+					<tr>
+						<td>部件</td>
+						<td>构件名称</td>
+						<td>状态</td>
+						<td>损坏类型</td>
+						<td>损坏程度</td>
+						<td>损坏原因</td>
+						<td colspan="2">维修范围与方案</td>
+						<td>需要特殊检查</td>
+						<td>下次检查时间</td>
+					</tr>
+					</thead>
+					<tbody id="createDeckRegularCheckTBody">
+					<tr>
+						<td>
+							<input type="text" class="form-control" id="create-deckRegularCheckPart0">
+						</td>
+						<td><input type="text" class="form-control" id="create-deckRegularCheckComponentName0"></td>
+						<td><input type="text" class="form-control" id="create-deckRegularCheckCondition0"></td>
+						<td>
+							<input type="text" class="form-control" id="create-deckRegularCheckDamageType0">
+						</td>
+						<td>
+							<select class=" form-control" id="create-deckRegularCheckDamageDegree0">
+								<option value="-1" disabled selected hidden>请选择</option>
+							</select>
+						</td>
+						<td><input type="text" class="form-control" id="create-deckRegularCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="create-deckRegularCheckMaintenanceScopeAndScheme0"></td>
+						<td>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="create-deckRegularCheckIsSpecialCheck0" value="是">是</label>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="create-deckRegularCheckIsSpecialCheck0" value="否">否</label>
+						</td>
+						<td><input type="date" style="width: 100%" id="create-deckRegularCheckNextCheckTime0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="toCreateSubNormalRegularCheck">上一页</button>
+					<button type="button" class="btn btn-primary" id="saveCreateNormalRegularCheckBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 修改上部结构常规定期检查的模态窗口 -->
+	<div class="modal fade normalRegularCheckModal" id="editSuperNormalRegularCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 95%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel4">修改常规定期检查记录</h4>
+				</div>
+				<table id="editSuperRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td colspan="10" style="font-size: 20px">常规定期检查记录表</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁名称</td>
+						<td colspan="2">
+							<input type="hidden" id="edit-normalRegularCheckBridgeId">
+							<input type="text" class="form-control" id="edit-normalRegularCheckBridgeName">
+						</td>
+						<td style="padding-top: 10px;font-size: 18px">检测单位</td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-normalRegularCheckUnit"></td>
+						<td style="padding-top: 10px;font-size: 18px">日期</td>
+						<td ><input type="date" style="width: 100%" id="edit-normalRegularCheckDate"></td>
+						<td style="padding-top: 10px;font-size: 18px">巡检人</td>
+						<td><input type="text" class="form-control" id="edit-normalRegularCheckPerson"></td>
+					</tr>
+					<tr>
+						<td colspan="10" style="font-size: 20px">桥梁上部结构</td>
+					</tr>
+					<tr>
+						<td>部件</td>
+						<td>构件名称</td>
+						<td>状态</td>
+						<td>损坏类型</td>
+						<td>损坏程度</td>
+						<td>损坏原因</td>
+						<td colspan="2">维修范围与方案</td>
+						<td>需要特殊检查</td>
+						<td>下次检查时间</td>
+					</tr>
+					</thead>
+					<tbody id="editSuperRegularCheckTBody">
+					<tr>
+						<td>
+							<input type="text" class="form-control" id="edit-superRegularCheckPart0">
+						</td>
+						<td><input type="text" class="form-control" id="edit-superRegularCheckComponentName0"></td>
+						<td><input type="text" class="form-control" id="edit-superRegularCheckCondition0"></td>
+						<td>
+							<input type="text" class="form-control" id="edit-superRegularCheckDamageType0">
+						</td>
+						<td>
+							<select class=" form-control" id="edit-superRegularCheckDamageDegree0">
+								<option value="-1" disabled selected hidden>请选择</option>
+							</select>
+						</td>
+						<td><input type="text" class="form-control" id="edit-superRegularCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-superRegularCheckMaintenanceScopeAndScheme0"></td>
+						<td>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="edit-superRegularCheckIsSpecialCheck0" value="是">是</label>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="edit-superRegularCheckIsSpecialCheck0" value="否">否</label>
+						</td>
+						<td><input type="date" style="width: 100%" id="edit-superRegularCheckNextCheckTime0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="editSubNormalRegularCheck">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建下部结构常规定期检查的模态窗口 -->
+	<div class="modal fade normalRegularCheckModal" id="editSubNormalRegularCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 95%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel5">修改常规定期检查记录</h4>
+				</div>
+				<table id="editSubRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td colspan="10" style="font-size: 20px">桥梁下部结构</td>
+					</tr>
+					<tr>
+						<td>部件</td>
+						<td>构件名称</td>
+						<td>状态</td>
+						<td>损坏类型</td>
+						<td>损坏程度</td>
+						<td>损坏原因</td>
+						<td colspan="2">维修范围与方案</td>
+						<td>需要特殊检查</td>
+						<td>下次检查时间</td>
+					</tr>
+					</thead>
+					<tbody id="editSubRegularCheckTBody">
+					<tr>
+						<td>
+							<input type="text" class="form-control" id="edit-subRegularCheckPart0">
+						</td>
+						<td><input type="text" class="form-control" id="edit-subRegularCheckComponentName0"></td>
+						<td><input type="text" class="form-control" id="edit-subRegularCheckCondition0"></td>
+						<td>
+							<input type="text" class="form-control" id="edit-subRegularCheckDamageType0">
+						</td>
+						<td>
+							<select class=" form-control" id="edit-subRegularCheckDamageDegree0">
+								<option value="-1" disabled selected hidden>请选择</option>
+							</select>
+						</td>
+						<td><input type="text" class="form-control" id="edit-subRegularCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-subRegularCheckMaintenanceScopeAndScheme0"></td>
+						<td>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="edit-subRegularCheckIsSpecialCheck0" value="是">是</label>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="edit-subRegularCheckIsSpecialCheck0" value="否">否</label>
+						</td>
+						<td><input type="date" style="width: 100%" id="edit-subRegularCheckNextCheckTime0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="toEditSuperNormalRegularCheck">上一页</button>
+					<button type="button" class="btn btn-primary" id="editDeckNormalRegularCheck">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 创建桥面系常规定期检查的模态窗口 -->
+	<div class="modal fade normalRegularCheckModal" id="editDeckNormalRegularCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 95%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel6">修改常规定期检查记录</h4>
+				</div>
+				<table id="editDeckRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+					<thead>
+					<tr>
+						<td colspan="10" style="font-size: 20px">桥梁桥面系</td>
+					</tr>
+					<tr>
+						<td>部件</td>
+						<td>构件名称</td>
+						<td>状态</td>
+						<td>损坏类型</td>
+						<td>损坏程度</td>
+						<td>损坏原因</td>
+						<td colspan="2">维修范围与方案</td>
+						<td>需要特殊检查</td>
+						<td>下次检查时间</td>
+					</tr>
+					</thead>
+					<tbody id="editDeckRegularCheckTBody">
+					<tr>
+						<td>
+							<input type="text" class="form-control" id="edit-deckRegularCheckPart0">
+						</td>
+						<td><input type="text" class="form-control" id="edit-deckRegularCheckComponentName0"></td>
+						<td><input type="text" class="form-control" id="edit-deckRegularCheckCondition0"></td>
+						<td>
+							<input type="text" class="form-control" id="edit-deckRegularCheckDamageType0">
+						</td>
+						<td>
+							<select class=" form-control" id="edit-deckRegularCheckDamageDegree0">
+								<option value="-1" disabled selected hidden>请选择</option>
+							</select>
+						</td>
+						<td><input type="text" class="form-control" id="edit-deckRegularCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-deckRegularCheckMaintenanceScopeAndScheme0"></td>
+						<td>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="edit-deckRegularCheckIsSpecialCheck0" value="是">是</label>
+							<label class="radio-inline" style="margin-top: 8px"><input type="radio" name="edit-deckRegularCheckIsSpecialCheck0" value="否">否</label>
+						</td>
+						<td><input type="date" style="width: 100%" id="edit-deckRegularCheckNextCheckTime0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="toEditSubNormalRegularCheck">上一页</button>
+					<button type="button" class="btn btn-primary" id="saveEditNormalRegularCheckBtn">下一页</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div style="position: relative; left: 10px; top: -10px;">
+			<div class="page-header">
+				<h3>常规定期检查记录</h3>
+			</div>
+		</div>
+	</div>
+	
+	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
+	
+		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
+		
+			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
+				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon" id="query-bridgeName">桥梁名称</div>
+				      <input class="form-control" type="text">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon" id="query-bridgeUnit">巡检单位</div>
+				      <input class="form-control" type="text">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon" id="query-bridgePerson">巡检人</div>
+				      <input class="form-control" type="text">
+				    </div>
+				  </div>
+
+				  
+				  <button type="submit" class="btn btn-default" id="queryNormalRegularCheckBtn">查询</button>
+				  
+				</form>
+			</div>
+			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
+				<div class="btn-group" style="position: relative; top: 18%;">
+					<button type="button" class="btn btn-primary" data-toggle="modal" id="createNormalRegularCheckBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+					<button type="button" class="btn btn-default" data-toggle="modal" id="editNormalRegularCheckBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+					<button type="button" class="btn btn-danger" id="deleteNormalRegularCheckBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				</div>
+
+			</div>
+			<div style="position: relative;top: 10px;">
+				<table class="table table-hover">
+					<thead>
+					<tr style="color: #B3B3B3;">
+						<td><input type="checkbox" /></td>
+						<td>桥梁名称</td>
+						<td>巡检单位</td>
+						<td>巡检人</td>
+						<td>巡检日期</td>
+					</tr>
+					</thead>
+					<tbody id="tBody">
+
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+	<link href="../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../../jquery/bs_pagination-master/css/jquery.bs_pagination.min.css" type="text/css" rel="stylesheet"/>
+	<script type="text/javascript" src="../../../jquery/jquery-1.11.1-min.js"></script>
+	<script type="text/javascript" src="../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="../../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script type="text/javascript" src="../../../jquery/bs_pagination-master/js/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="../../../jquery/bs_pagination-master/localization/en.js"></script>
+
+<script type="text/javascript">
+
+	$(function(){
+		
+		//定制字段
+		$("#definedColumns > li").click(function(e) {
+			//防止下拉菜单消失
+	        e.stopPropagation();
+	    });
+
+
+		
+	});
+	
+</script>
+</head>
+<style>
+	#createCustomerModal table tr td input{
+		background-color: transparent;
+		border-style: none;
+		border-radius:0;
+		outline-color:transparent;
+	}
+	#createCustomerModal table tr td{
+		font-size: 15px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+</style>
+<body>
+
+	<!-- 创建特殊检查的模态窗口 -->
+	<div class="modal fade" id="createSpecialCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">创建特殊检查记录</h4>
+				</div>
+				<table class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed;">
+					<thead>
+					<tr>
+						<td colspan="9" style="font-size: 20px;padding-top: 10px;">桥梁特殊检查报告</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁名称</td>
+						<td colspan="2"><select class="form-control" id="create-specialCheckBridgeId">
+							<option value="-1" disabled selected hidden>请选择</option>
+						</select></td>
+						<td  style="padding-top: 10px;font-size: 18px">巡检人</td>
+						<td><input type="text" class="form-control" id="create-specialCheckPerson"></td>
+						<td  style="padding-top: 10px;font-size: 18px">巡检单位</td>
+						<td><input type="text" class="form-control" id="create-specialCheckUnit"></td>
+						<td  style="padding-top: 10px;font-size: 18px">巡检日期</td>
+						<td><input type="date" class="form-control" id="create-specialCheckDate"></td>
+					</tr>
+					<tr>
+						<td>构件名称</td>
+						<td colspan="2">基本情况</td>
+						<td colspan="2">损坏原因</td>
+						<td colspan="2">损坏程度</td>
+						<td colspan="2">建议方案</td>
+					</tr>
+					</thead>
+					<tbody id="createSpecialCheckTBody">
+					<tr>
+						<td>
+							<input type="hidden" id="create-structureComponentId0">
+							<input class="form-control" id="create-componentName0">
+						</td>
+						<td colspan="2"><input type="text" class="form-control" id="create-specialCheckComponentSituation0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="create-specialCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="create-specialCheckDamageDegree0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="create-specialCheckProposal0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="saveCreateSpecialCheckBtn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 修改特殊检查的模态窗口 -->
+	<div class="modal fade" id="editSpecialCheckModal" role="dialog">
+		<div class="modal-dialog" role="document" style="width: 85%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel2">创建特殊检查记录</h4>
+				</div>
+				<table class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed;">
+					<thead>
+					<tr>
+						<td colspan="9" style="font-size: 20px;padding-top: 10px;">桥梁特殊检查报告</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 10px;font-size: 18px">桥梁名称</td>
+						<td colspan="2"><select class="form-control" id="edit-specialCheckBridgeId">
+							<option value="-1" disabled selected hidden>请选择</option>
+						</select></td>
+						<td  style="padding-top: 10px;font-size: 18px">巡检人</td>
+						<td><input type="text" class="form-control" id="edit-specialCheckPerson"></td>
+						<td  style="padding-top: 10px;font-size: 18px">巡检单位</td>
+						<td><input type="text" class="form-control" id="edit-specialCheckUnit"></td>
+						<td  style="padding-top: 10px;font-size: 18px">巡检日期</td>
+						<td><input type="date" class="form-control" id="edit-specialCheckDate"></td>
+					</tr>
+					<tr>
+						<td>构件名称</td>
+						<td colspan="2">基本情况</td>
+						<td colspan="2">损坏原因</td>
+						<td colspan="2">损坏程度</td>
+						<td colspan="2">建议方案</td>
+					</tr>
+					</thead>
+					<tbody id="editSpecialCheckTBody">
+					<tr>
+						<td>
+							<input type="hidden" id="edit-structureComponentId0">
+							<input class="form-control" id="edit-componentName0">
+						</td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-specialCheckComponentSituation0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-specialCheckDamageReason0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-specialCheckDamageDegree0"></td>
+						<td colspan="2"><input type="text" class="form-control" id="edit-specialCheckProposal0"></td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="saveEditSpecialCheckBtn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div style="position: relative; left: 10px; top: -10px;">
+			<div class="page-header">
+				<h3>特殊检查巡检记录</h3>
+			</div>
+		</div>
+	</div>
+	
+	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
+	
+		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
+		
+			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
+				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon">桥梁名称</div>
+				      <input class="form-control" type="text" id="query-bridgeName">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon">巡检单位</div>
+				      <input class="form-control" type="text" id="query-bridgeUnit">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="input-group">
+				      <div class="input-group-addon">巡检人</div>
+				      <input class="form-control" type="text" id="query-bridgePerson">
+				    </div>
+				  </div>
+
+				  
+				  <button type="button" class="btn btn-default" id="querySpecialCheckBtn">查询</button>
+				  
+				</form>
+			</div>
+			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
+				<div class="btn-group" style="position: relative; top: 18%;">
+					<button type="button" class="btn btn-primary" data-toggle="modal" id="createSpecialCheckBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+					<button type="button" class="btn btn-default" data-toggle="modal" id="editSpecialCheckBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+					<button type="button" class="btn btn-danger" id="deleteSpecialCheckBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				</div>
+			</div>
+			<div style="position: relative;top: 10px;">
+				<table class="table table-hover">
+					<thead>
+					<tr style="color: #B3B3B3;">
+						<td><input type="checkbox" /></td>
+						<td>桥梁名称</td>
+						<td>巡检单位</td>
+						<td>巡检人</td>
+						<td>巡检日期</td>
+					</tr>
+					</thead>
+					<tbody id="tBody">
+
+					</tbody>
+				</table>
+
+				<div id="demo_pag1"></div>
+			</div>
+
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link href="../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	//默认情况下取消和保存按钮是隐藏的
+	var cancelAndSaveBtnDefault = true;
+	
+	$(function(){
+		$("#remark").focus(function(){
+			if(cancelAndSaveBtnDefault){
+				//设置remarkDiv的高度为130px
+				$("#remarkDiv").css("height","130px");
+				//显示
+				$("#cancelAndSaveBtn").show("2000");
+				cancelAndSaveBtnDefault = false;
+			}
+		});
+		
+		$("#cancelBtn").click(function(){
+			//显示
+			$("#cancelAndSaveBtn").hide();
+			//设置remarkDiv的高度为130px
+			$("#remarkDiv").css("height","90px");
+			cancelAndSaveBtnDefault = true;
+		});
+		
+		$(".remarkDiv").mouseover(function(){
+			$(this).children("div").children("div").show();
+		});
+		
+		$(".remarkDiv").mouseout(function(){
+			$(this).children("div").children("div").hide();
+		});
+		
+		$(".myHref").mouseover(function(){
+			$(this).children("span").css("color","red");
+		});
+		
+		$(".myHref").mouseout(function(){
+			$(this).children("span").css("color","#E6E6E6");
+		});
+	});
+	
+</script>
+
+</head>
+<body>
+
+
+	<!-- 返回按钮 -->
+	<div style="position: relative; top: 35px; left: 10px;">
+		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
+	</div>
+	
+	<!-- 大标题 -->
+	<div style="position: relative; left: 40px; top: -30px;">
+		<div class="page-header">
+			<h3>日常巡检记录详细信息</h3>
+		</div>
+	</div>
+	
+	<br/>
+	<br/>
+	<br/>
+
+	<!-- 详细信息 -->
+	<div style="position: relative; top: -110px;">
+		<table id="createDailyCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+			<thead>
+			<tr>
+				<td colspan="6" style="font-size: 20px">桥梁日常巡检报表</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding-top: 10px;font-size: 18px">桥梁名称</td>
+				<td></td>
+				<td colspan="2" style="padding-top: 10px;font-size: 18px">巡检单位</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>检查项</td>
+				<td>完好</td>
+				<td>损坏类型</td>
+				<td>损坏程度</td>
+				<td>损坏位置</td>
+				<td>备注</td>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td>桥名牌</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>限高牌、限载牌</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>车行道</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>人行道</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>伸缩缝</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>栏杆</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>排水设施</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>桥路连接位置</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>上部结构</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>支座</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>下部结构</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="3">桥梁保护区域内施工</td>
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<td colspan="3">其他危及行人、行船、行车安全的病害</td>
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding-top: 10px;font-size: 18px">巡查人</td>
+				<td></td>
+				<td colspan="2" style="padding-top: 10px;font-size: 18px">巡检日期</td>
+				<td></td>
+			</tr>
+			</tfoot>
+		</table>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	//默认情况下取消和保存按钮是隐藏的
+	var cancelAndSaveBtnDefault = true;
+	
+	$(function(){
+		$("#remark").focus(function(){
+			if(cancelAndSaveBtnDefault){
+				//设置remarkDiv的高度为130px
+				$("#remarkDiv").css("height","130px");
+				//显示
+				$("#cancelAndSaveBtn").show("2000");
+				cancelAndSaveBtnDefault = false;
+			}
+		});
+		
+		$("#cancelBtn").click(function(){
+			//显示
+			$("#cancelAndSaveBtn").hide();
+			//设置remarkDiv的高度为130px
+			$("#remarkDiv").css("height","90px");
+			cancelAndSaveBtnDefault = true;
+		});
+		
+		$(".remarkDiv").mouseover(function(){
+			$(this).children("div").children("div").show();
+		});
+		
+		$(".remarkDiv").mouseout(function(){
+			$(this).children("div").children("div").hide();
+		});
+		
+		$(".myHref").mouseover(function(){
+			$(this).children("span").css("color","red");
+		});
+		
+		$(".myHref").mouseout(function(){
+			$(this).children("span").css("color","#E6E6E6");
+		});
+	});
+	
+</script>
+
+</head>
+<body>
+
+	<!-- 返回按钮 -->
+	<div style="position: relative; top: 35px; left: 10px;">
+		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
+	</div>
+	
+	<!-- 大标题 -->
+	<div style="position: relative; left: 40px; top: -30px;">
+		<div class="page-header">
+			<h3>桥梁详细信息 </small></h3>
+		</div>
+<!--		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">-->
+<!--			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editCustomerModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>-->
+<!--			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>-->
+<!--		</div>-->
+	</div>
+	
+	<br/>
+	<br/>
+	<br/>
+
+	<!-- 详细信息 -->
+	<div style="position: relative; top: -70px;">
+		<div style="position: relative; left: 40px; height: 30px;">
+			<div style="width: 300px; color: gray;">桥梁名称</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>zhangsan</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥梁类型</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>动力节点</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
+			<div style="width: 300px; color: gray;">桥梁状况等级</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>http://www.bjpowernode.com</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥梁所在路面</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>010-84846003</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
+			<div style="width: 300px; color: gray;">桥梁录入日期</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>http://www.bjpowernode.com</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">跨越</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>010-84846003</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
+			<div style="width: 300px; color: gray;">桥梁资料审定人</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>http://www.bjpowernode.com</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥梁资料复审人</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>010-84846003</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
+			<div style="width: 300px; color: gray;">是否进行特殊检查</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>http://www.bjpowernode.com</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">下次日常巡检时间</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>010-84846003</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
+			<div style="width: 300px; color: gray;">下次常规定期检查时间</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>http://www.bjpowernode.com</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">下次结构定期检查时间</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>010-84846003</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 60px;">
+			<div style="width: 300px; color: gray;">管理单位</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">养护单位</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 70px;">
+			<div style="width: 300px; color: gray;">建设单位</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">设计单位</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 80px;">
+			<div style="width: 300px; color: gray;">监理单位</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">施工单位</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 90px;">
+			<div style="width: 300px; color: gray;">建成年月</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>2022-01-01</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">总造价</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>123456789</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 100px;">
+			<div style="width: 300px; color: gray;">养护类型</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">养护等级</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 110px;">
+			<div style="width: 300px; color: gray;">道路等级</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">结构类型</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 120px;">
+			<div style="width: 300px; color: gray;">设计荷载</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">限载标准</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 130px;">
+			<div style="width: 300px; color: gray;">抗震烈度</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">正斜交角</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 140px;">
+			<div style="width: 300px; color: gray;">桥梁跨数</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">跨径组合</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 150px;">
+			<div style="width: 300px; color: gray;">桥面面积</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥梁总长</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 160px;">
+			<div style="width: 300px; color: gray;">桥梁总宽</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">车行道净宽</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 170px;">
+			<div style="width: 300px; color: gray;">河道等级</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">最高水位</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 180px;">
+			<div style="width: 300px; color: gray;">常水位</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">主梁形式</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 190px;">
+			<div style="width: 300px; color: gray;">主梁尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">主梁数量</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 200px;">
+			<div style="width: 300px; color: gray;">横梁形式</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">主跨桥下净空</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 200px;">
+			<div style="width: 300px; color: gray;">桥下限高</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">拱桥矢跨比</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 210px;">
+			<div style="width: 300px; color: gray;">支座形式</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">支座数量</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 220px;">
+			<div style="width: 300px; color: gray;">桥面结构</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥面铺装厚度</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 230px;">
+			<div style="width: 300px; color: gray;">伸缩缝形式</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">伸缩缝数量</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 240px;">
+			<div style="width: 300px; color: gray;">主桥纵波</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">主桥横波</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 250px;">
+			<div style="width: 300px; color: gray;">引桥纵波</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">引桥横波</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 260px;">
+			<div style="width: 300px; color: gray;">集水口尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">集水口数量</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 270px;">
+			<div style="width: 300px; color: gray;">泄水管尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">泄水管长度</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 280px;">
+			<div style="width: 300px; color: gray;">栏杆总长</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">栏杆结构</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 290px;">
+			<div style="width: 300px; color: gray;">端柱尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">护岸类型</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 300px;">
+			<div style="width: 300px; color: gray;">引坡挡墙类型</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥墩形式</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 310px;">
+			<div style="width: 300px; color: gray;">桥墩数量</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥墩标高</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 320px;">
+			<div style="width: 300px; color: gray;">盖梁尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥墩基座标高</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 330px;">
+			<div style="width: 300px; color: gray;">桥墩底板尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥墩基桩尺寸</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 340px;">
+			<div style="width: 300px; color: gray;">桥墩基桩根数</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥台形式</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 350px;">
+			<div style="width: 300px; color: gray;">桥台数量</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥台标高</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 360px;">
+			<div style="width: 300px; color: gray;">桥台基座标高</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">台帽尺寸</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 370px;">
+			<div style="width: 300px; color: gray;">桥台底板尺寸</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">桥台基装尺寸</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 380px;">
+			<div style="width: 300px; color: gray;">桥台基桩根数</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">挡上板厚度</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 390px;">
+			<div style="width: 300px; color: gray;">翼墙形式</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">翼墙厚度</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 400px;">
+			<div style="width: 300px; color: gray;">给水管</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">燃气管</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+		<div style="position: relative; left: 40px; height: 30px; top: 410px;">
+			<div style="width: 300px; color: gray;">电力缆</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>重庆交通大学</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">通信电缆</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>重庆交通大学</b></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
+			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
+		</div>
+	</div>
+
+	
+	<div style="height: 200px;"></div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link href="../../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../../../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	//默认情况下取消和保存按钮是隐藏的
+	var cancelAndSaveBtnDefault = true;
+	
+	$(function(){
+		$("#remark").focus(function(){
+			if(cancelAndSaveBtnDefault){
+				//设置remarkDiv的高度为130px
+				$("#remarkDiv").css("height","130px");
+				//显示
+				$("#cancelAndSaveBtn").show("2000");
+				cancelAndSaveBtnDefault = false;
+			}
+		});
+		
+		$("#cancelBtn").click(function(){
+			//显示
+			$("#cancelAndSaveBtn").hide();
+			//设置remarkDiv的高度为130px
+			$("#remarkDiv").css("height","90px");
+			cancelAndSaveBtnDefault = true;
+		});
+		
+		$(".remarkDiv").mouseover(function(){
+			$(this).children("div").children("div").show();
+		});
+		
+		$(".remarkDiv").mouseout(function(){
+			$(this).children("div").children("div").hide();
+		});
+		
+		$(".myHref").mouseover(function(){
+			$(this).children("span").css("color","red");
+		});
+		
+		$(".myHref").mouseout(function(){
+			$(this).children("span").css("color","#E6E6E6");
+		});
+	});
+	
+</script>
+
+</head>
+<body>
+
+	<!-- 返回按钮 -->
+	<div style="position: relative; top: 35px; left: 10px;">
+		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
+	</div>
+	
+	<!-- 大标题 -->
+	<div style="position: relative; left: 40px; top: -30px;">
+		<div class="page-header">
+			<h3>桥梁常规定期检查详细信息</h3>
+		</div>
+		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
+		</div>
+	</div>
+	
+	<br/>
+	<br/>
+	<br/>
+
+	<!-- 详细信息 -->
+	<div style="position: relative; top: -160px;">
+		<table id="createRegularCheckTable" class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed">
+			<thead>
+			<tr>
+				<td colspan="11" style="font-size: 20px">常规定期检查记录表</td>
+			</tr>
+			</thead>
+			<tbody id="createRegularCheckTBody">
+			<tr>
+				<td style="padding-top: 10px;font-size: 18px">桥梁名称</td>
+				<td colspan="2"></td>
+				<td colspan="2" style="padding-top: 10px;font-size: 18px">检测单位</td>
+				<td colspan="2"></td>
+				<td style="padding-top: 10px;font-size: 18px">日期</td>
+				<td ></td>
+				<td style="padding-top: 10px;font-size: 18px">巡检人</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>部件</td>
+				<td>构件名称</td>
+				<td>状态</td>
+				<td>损坏类型</td>
+				<td>损坏程度</td>
+				<td>损坏原因</td>
+				<td colspan="2">维修范围与方案</td>
+				<td>需要特殊检查</td>
+				<td colspan="2">下次检查时间</td>
+			</tr>
+			<tr>
+				<td>上部结构</td>
+				<td>桥台</td>
+				<td>损坏</td>
+				<td>有损坏</td>
+				<td>重度</td>
+				<td>桥面坍塌</td>
+				<td colspan="2">抢修</td>
+				<td>是</td>
+				<td colspan="2">2022/06/01</td>
+			</tr>
+			<tr>
+				<td>下部结构</td>
+				<td>桥墩</td>
+				<td>损坏</td>
+				<td>有损坏</td>
+				<td>轻度</td>
+				<td>桥面冲刷</td>
+				<td colspan="2">抢修</td>
+				<td>否</td>
+				<td colspan="2">2022/06/01</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

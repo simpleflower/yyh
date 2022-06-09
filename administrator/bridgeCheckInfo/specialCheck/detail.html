@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link href="../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../../jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	//默认情况下取消和保存按钮是隐藏的
+	var cancelAndSaveBtnDefault = true;
+	
+	$(function(){
+		$("#remark").focus(function(){
+			if(cancelAndSaveBtnDefault){
+				//设置remarkDiv的高度为130px
+				$("#remarkDiv").css("height","130px");
+				//显示
+				$("#cancelAndSaveBtn").show("2000");
+				cancelAndSaveBtnDefault = false;
+			}
+		});
+		
+		$("#cancelBtn").click(function(){
+			//显示
+			$("#cancelAndSaveBtn").hide();
+			//设置remarkDiv的高度为130px
+			$("#remarkDiv").css("height","90px");
+			cancelAndSaveBtnDefault = true;
+		});
+		
+		$(".remarkDiv").mouseover(function(){
+			$(this).children("div").children("div").show();
+		});
+		
+		$(".remarkDiv").mouseout(function(){
+			$(this).children("div").children("div").hide();
+		});
+		
+		$(".myHref").mouseover(function(){
+			$(this).children("span").css("color","red");
+		});
+		
+		$(".myHref").mouseout(function(){
+			$(this).children("span").css("color","#E6E6E6");
+		});
+	});
+	
+</script>
+
+</head>
+<body>
+
+	<!-- 返回按钮 -->
+	<div style="position: relative; top: 35px; left: 10px;">
+		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
+	</div>
+	
+	<!-- 大标题 -->
+	<div style="position: relative; left: 40px; top: -30px;">
+		<div class="page-header">
+			<h3>桥梁特殊检查详细信息</h3>
+		</div>
+		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
+		</div>
+	</div>
+	
+	<br/>
+	<br/>
+	<br/>
+
+	<!-- 详细信息 -->
+	<div style="position: relative; top: -160px;">
+		<table class="table table-bordered table-striped table-condensed" style="text-align: center;width: 95%;margin: auto;table-layout: fixed;">
+			<thead>
+			<tr>
+				<td colspan="6" style="font-size: 20px;padding-top: 10px;">xx桥 桥梁特殊检查报告</td>
+				<td  style="padding-top: 10px;font-size: 18px">巡检人</td>
+				<td></td>
+				<td  style="padding-top: 10px;font-size: 18px">巡检日期</td>
+				<td></td>
+			</tr>
+			</thead>
+			<tbody id="createSpecialCheckTBody">
+			<tr>
+				<td>部件</td>
+				<td>构件名称</td>
+				<td colspan="2">基本情况</td>
+				<td colspan="2">损坏原因</td>
+				<td>损坏程度</td>
+				<td colspan="3">建议方案</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td></td>
+				<td colspan="3"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
